@@ -1,5 +1,5 @@
 #include "reader.h"
-
+#include "tokenizer.h"
 
 #include <iostream>
 
@@ -9,11 +9,11 @@
 
 
 
-std::string READ(const std::string& input);
+std::string READ(std::string& input);
 int EVAL();
 int PRINT();
 
-std::string rep(const std::string& input);
+std::string rep(std::string& input);
 
 int main()
 {
@@ -21,16 +21,23 @@ int main()
 	while("lalija")
 	{
 		input = prompt("laza>",std::cin,std::cout);
-		std::cout << rep(input) << "\n";	
+		std::cout << rep(input) << "\n";
 	}
 	return 0;	
 }
 
 
 
-std::string rep(const std::string& input)
+std::string rep(std::string& input)
 {
-	return input;
+	Tokenizer t(input);
+	while(!t.is_end())
+	{
+		auto res = t.next();
+		if(t.state != Tokenizer_State::WHITESPACE)
+			std::cout << res << "\n";
+	}
+	return "";
 }
 
 

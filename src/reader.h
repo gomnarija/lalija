@@ -5,6 +5,4 @@
 
 std::string prompt(const std::string &,std::istream&,std::ostream&);
 
-
-
 #endif
