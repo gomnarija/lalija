@@ -78,6 +78,11 @@ std::string laList::print()
 }
 
 
+std::string laSymbol::print()
+{
+	return this->m_value;
+}
+
 std::string laNil::print()
 {
 	return "laNil";

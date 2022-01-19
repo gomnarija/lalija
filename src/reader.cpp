@@ -84,7 +84,7 @@ laValPtr read_atom(Tokenizer &tok)
 		case Tokenizer_State::STRING:
 			return laValPtr(new laString(tok.curr()));
 		default://TODO:Symbol
-			return laValPtr(new laNil());
+			return laValPtr(new laSymbol(tok.curr()));
 
 	}
 
