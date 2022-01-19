@@ -140,7 +140,7 @@ bool Tokenizer::is_token_end(std::string::iterator &it)
 	}
 	//number, parse until first non-digit
 	if(this->state == Tokenizer_State::NUMBER &&
-		(c < '0' || c > '9'))
+		(c < '0' || c > '9') && c != '.')
 			return true;
 	
 	//atomic symbol, parse until whitespace,parentheses or stream end

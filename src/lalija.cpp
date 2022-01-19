@@ -1,56 +1,46 @@
 #include "reader.h"
 #include "tokenizer.h"
+#include "latypes.h"
 
 #include <iostream>
 
 
+laValPtr 	READ(std::string& input);
+laValPtr 	EVAL(laValPtr ast);
+std::string	PRINT(laValPtr ast);
 
-
-
-
-
-std::string READ(std::string& input);
-int EVAL();
-int PRINT();
-
-std::string rep(std::string& input);
+std::string rep();
 
 int main()
 {
-	std::string input;
+
 	while("lalija")
-	{
-		input = prompt("laza>",std::cin,std::cout);
-		std::cout << rep(input) << "\n";
-	}
+		std::cout  << rep() << "\n";
+	
 	return 0;	
 }
 
-
-
-std::string rep(std::string& input)
+std::string rep()
 {
-	Tokenizer t(input);
-	while(!t.is_end())
-	{
-		auto res = t.next();
-		if(t.state != Tokenizer_State::WHITESPACE)
-			std::cout << res << "\n";
-	}
-	return "";
+	std::string input = prompt("laza>",std::cin,std::cout);
+	
+	return PRINT(EVAL(READ(input)));
 }
 
+laValPtr READ(std::string& input)
+{	
+	Tokenizer tok(input);
+	return read_form(tok);	
 
-std::string READ()
-{
-	return "test";
 }
-int EVAL()
+
+laValPtr EVAL(laValPtr ast)
 {
-	return 0;
+	return ast;
 }
-int PRINT()
+
+std::string PRINT(laValPtr ast)
 {
-	return 0;
+	return ast->print();
 }
 
