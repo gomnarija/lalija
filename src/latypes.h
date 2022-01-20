@@ -4,7 +4,7 @@
 #include	<string>
 #include	<vector>
 #include	<memory>
-
+#include	<map>
 
 enum laType
 {
@@ -29,7 +29,6 @@ struct laVal
 };
 typedef	std::shared_ptr<laVal>
 		laValPtr;
-
 
 struct laNumber : laVal
 {
@@ -120,5 +119,46 @@ struct laNil : laVal
 	const laType get_type() override {return laType::Nil;}
 
 };
+
+
+typedef	std::shared_ptr<laNumber>
+		laNumberPtr;
+typedef	std::shared_ptr<laString>
+		laStringPtr;
+typedef	std::shared_ptr<laSymbol>
+		laSymbolPtr;
+typedef	std::shared_ptr<laList>
+		laListPtr;
+
+
+
+
+struct laEnv
+{
+
+	laEnv() :m_upper_env{nullptr} {}
+	laEnv(laEnv* env_ptr) 
+		:m_upper_env{env_ptr}{}
+	laEnv(laEnv* env_ptr, 
+		std::map<std::string,laValPtr> m) 
+			: m_map{m},m_upper_env{env_ptr}{};
+	
+
+	laValPtr	get_val(std::string key);
+	void		set_val(std::string key,
+				laValPtr val);
+	void		insert_val(std::string key,
+				laValPtr val);
+	void		fset_val(std::string key,
+				 laValPtr val);
+		
+	laEnv*	get_upper_env()
+				{return this->m_upper_env;}
+private:
+	std::map<std::string,laValPtr>	m_map;
+	laEnv*				m_upper_env;
+};
+
+
 
 #endif

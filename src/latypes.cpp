@@ -87,3 +87,39 @@ std::string laNil::print()
 {
 	return "laNil";
 }
+
+
+laValPtr laEnv::get_val(std::string key)
+{
+	if(this->m_map.find(key) != this->m_map.end())
+		return this->m_map.at(key);	
+	else
+		//TODO:error
+		return laValPtr(new laNil);
+
+}
+
+void laEnv::set_val(std::string key,laValPtr val)
+{
+	//sets only if key already exists in map
+
+	if(this->m_map.find(key) != this->m_map.end())
+		this->m_map.at(key) = val;
+	//TODO:error
+}
+
+void laEnv::insert_val(std::string key,laValPtr val)
+{
+	//inserts new key:val pair in map
+
+
+	if(this->m_map.find(key) == this->m_map.end())
+		this->m_map[key] = laValPtr(val);
+	//TODO:error
+
+}
+
+void laEnv::fset_val(std::string key,laValPtr val)
+{
+	this->m_map[key] = val;
+}
