@@ -1,30 +1,34 @@
 #include "reader.h"
 #include "tokenizer.h"
 #include "latypes.h"
+#include "eval.h"
 
 #include <iostream>
 
 
 laValPtr 	READ(std::string& input);
-laValPtr 	EVAL(laValPtr ast);
+laValPtr 	EVAL(laValPtr ast,laEnv &env);
 std::string	PRINT(laValPtr ast);
 
-std::string rep();
+std::string rep(laEnv &env);
 
 int main()
 {
 
+	laEnv	global_env;
+	global_env.insert_val("pi",laValPtr(new laNumber(3.14)));
+	
 	while("lalija")
-		std::cout  << rep() << "\n";
+		std::cout  << rep(global_env) << "\n";
 	
 	return 0;	
 }
 
-std::string rep()
+std::string rep(laEnv &env)
 {
 	std::string input = prompt("laza>",std::cin,std::cout);
 	
-	return PRINT(EVAL(READ(input)));
+	return PRINT(EVAL(READ(input),env));
 }
 
 laValPtr READ(std::string& input)
@@ -34,9 +38,9 @@ laValPtr READ(std::string& input)
 
 }
 
-laValPtr EVAL(laValPtr ast)
+laValPtr EVAL(laValPtr ast,laEnv &env)
 {
-	return ast;
+	return eval_sex(ast,env);
 }
 
 std::string PRINT(laValPtr ast)
