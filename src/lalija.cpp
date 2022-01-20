@@ -16,7 +16,7 @@ int main()
 {
 
 	laEnv	global_env;
-	global_env.insert_val("pi",laValPtr(new laNumber(3.14)));
+	global_env.insert_val("pi",laValPtr(new laNumber(3.141592653589793)));
 	
 	while("lalija")
 		std::cout  << rep(global_env) << "\n";
