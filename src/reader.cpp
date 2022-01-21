@@ -1,6 +1,7 @@
 #include "reader.h"
 #include "latypes.h"
 #include "tokenizer.h"
+#include "core.h"
 
 #include <iostream>
 
@@ -26,7 +27,7 @@ laValPtr read_form(Tokenizer &tok)
 {
 	if(tok.state != Tokenizer_State::START)
 		//TODO:error
-		return laValPtr(new laNil());
+		return la_nil();
 
 	tok.next();
 
@@ -40,7 +41,7 @@ laValPtr read_form(Tokenizer &tok)
 			return read_atom(tok);	
 		default:
 			//TODO:error
-			return laValPtr(new laNil());
+			return la_nil();
 	}
 }
 
@@ -48,7 +49,7 @@ laValPtr read_list(Tokenizer &tok)
 {
 	if(tok.state != Tokenizer_State::L_PARAN)
 		//TODO:error
-		return laValPtr(new laNil());
+		return la_nil();
 	
 	laList 	    *res  = new laList();
 	std::string token = tok.next();
@@ -58,7 +59,7 @@ laValPtr read_list(Tokenizer &tok)
 
 		if(tok.state == Tokenizer_State::END)
 			//TODO:error
-			return laValPtr(new laNil());
+			return la_nil();
 		
 		if(tok.state == Tokenizer_State::L_PARAN)//list in list
 			(*res).insert(read_list(tok));
@@ -78,13 +79,13 @@ laValPtr read_atom(Tokenizer &tok)
 	{
 		case Tokenizer_State::END:
 			//TODO:error
-			return laValPtr(new laNil());
+			return la_nil(); 
 		case Tokenizer_State::NUMBER:
-			return laValPtr(new laNumber(tok.curr()));
+			return la_number(tok.curr());
 		case Tokenizer_State::STRING:
-			return laValPtr(new laString(tok.curr()));
+			return la_string(tok.curr());
 		default://TODO:Symbol
-			return laValPtr(new laSymbol(tok.curr()));
+			return la_symbol(tok.curr());
 
 	}
 

@@ -25,7 +25,11 @@ struct laVal
 	
 	const virtual laType get_type(){return laType::Nil;}
 
+	const virtual bool is_true()
+		{return false;}
 
+	const virtual bool equals(std::shared_ptr<laVal> other)
+		{return false;}
 };
 typedef	std::shared_ptr<laVal>
 		laValPtr;
@@ -45,6 +49,10 @@ struct laNumber : laVal
 		override;
 
 	const laType get_type() override {return laType::Number;}
+	const  bool is_true() override 
+			{return this->m_value==0?false:true;}
+
+	const bool equals (std::shared_ptr<laVal> other)override;
 
 private:
 	double		m_value;
@@ -63,6 +71,11 @@ struct laString : laVal
 		override;
 
 	const laType get_type() override {return laType::String;}
+	const  bool is_true() override 
+			{return this->m_value=="\"\""?false:true;}
+
+	const bool equals (std::shared_ptr<laVal> other)override;
+
 
 private:
 	std::string	m_value;
@@ -88,6 +101,11 @@ struct laList : laVal
 
 
 	const laType get_type() override {return laType::List;}
+	const  bool is_true() override 
+			{return this->size()==0?false:true;}
+
+	const bool equals(std::shared_ptr<laVal> other) override;
+
 
 private:
 	std::vector<laValPtr>	m_items;
@@ -109,16 +127,25 @@ private:
 
 struct laNil : laVal
 {
-	laNil(){}
 
+	laNil(){};	
 	
 	std::string print() 
 		override;
 
 
+	static laValPtr Nil();
+	
+	
+private:
 	const laType get_type() override {return laType::Nil;}
 
+	const bool equals (std::shared_ptr<laVal> other) override
+		{return true;} 
+
+
 };
+
 
 
 typedef	std::shared_ptr<laNumber>
@@ -130,6 +157,8 @@ typedef	std::shared_ptr<laSymbol>
 typedef	std::shared_ptr<laList>
 		laListPtr;
 
+
+laValPtr laNilVal();
 
 
 

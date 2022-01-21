@@ -16,9 +16,17 @@ std::map<std::string,
 		{"+",&la_sum},
 		{"-",&la_difference},	
 		{"*",&la_product},	
-		{"/",&la_quotient}	
+		{"/",&la_quotient},
+		{"?",&la_truth_value},
+		{"=",&la_equals}
 	};
 
+
+std::map<std::string,
+	laValPtr (*)(laListPtr, laEnv&)> ne_operators=
+	{	
+		{"if",&la_if}
+	};
 
 
 laValPtr env_search(laValPtr symbol, laEnv &env)
@@ -34,7 +42,7 @@ laValPtr env_search(laValPtr symbol, laEnv &env)
 	}
 
 	//TODO:error
-	return laValPtr(new laNil());
+	return la_nil();
 }
 
 
@@ -50,7 +58,7 @@ laValPtr eval_sex(laValPtr ast,laEnv &env)
 		case laType::List:
 			return eval_list(ast,env);
 		default:
-			return laValPtr(new laNil());
+			return la_nil(); 
 	}
 
 }
@@ -62,14 +70,20 @@ laValPtr eval_list(laValPtr list,laEnv &env)
 	laValPtr   op;
 
 	if(list_ptr->size() == 0)
-		return laValPtr(new laList());
+		return la_list();
 
 	//operation
 	op = list_ptr->at(0);
 
 	if(op->get_type() != laType::Symbol)
 		//TODO:error
-		return laValPtr(new laNil());
+		return la_nil();
+
+
+	//no eval
+	if(ne_operators.find(op->print()) != ne_operators.end())
+		return ne_operators.at(op->print())
+			(std::dynamic_pointer_cast<laList>(list),env);
 
 	//eval args and add them to args list
 	for(int i=1;i<list_ptr->size();i++)
@@ -85,7 +99,7 @@ laValPtr eval_list(laValPtr list,laEnv &env)
 	if(operators.find(op->print()) !=operators.end())
 		return operators.at(op->print())(args,env);
 	else//TODO:functions
-		return laValPtr(new laNil());
+		return la_nil(); 
 		
 }
 
@@ -100,6 +114,6 @@ laValPtr eval_atom(laValPtr atom,laEnv &env)
 		case laType::Symbol:
 			return env_search(atom,env);
 		default:
-			return laValPtr(new laNil());
+			return la_nil();
 	}
 }

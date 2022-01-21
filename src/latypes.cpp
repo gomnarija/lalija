@@ -1,11 +1,14 @@
 #include "latypes.h"
-
+#include "core.h"
 
 #include <string>
 #include <stdexcept>
 #include <float.h>
 #include <vector>
 #include <sstream>
+
+
+
 
 
 std::string laVal::print()
@@ -39,10 +42,22 @@ std::string laNumber::print()
 	return ss.str();
 }
 
+const bool laNumber::equals(laValPtr other)
+{
+	return this->m_value == 
+		(std::dynamic_pointer_cast<laNumber>(other))->value();
+}
 
 std::string laString::print()
 {
 	return this->m_value;
+}
+
+
+const bool laString::equals(laValPtr other)
+{
+	return this->m_value == 
+		(std::dynamic_pointer_cast<laString>(other))->value();
 }
 
 
@@ -78,6 +93,23 @@ std::string laList::print()
 }
 
 
+const bool laList::equals(std::shared_ptr<laVal> other)
+{
+	laListPtr list = std::dynamic_pointer_cast<laList>(other);
+
+	for(int i=0;i<this->size();i++)
+	{
+		laValPtr first  = this->at(i);
+		laValPtr second = this->at(i);
+	
+		if(first->get_type() != second->get_type() ||
+					!first->equals(second))
+			return false;
+	}
+	return true;
+	
+}
+
 std::string laSymbol::print()
 {
 	return this->m_value;
@@ -85,7 +117,13 @@ std::string laSymbol::print()
 
 std::string laNil::print()
 {
-	return "laNil";
+	return "Nil";
+}
+
+laValPtr laNilVal()
+{
+	static laValPtr nil_ptr(new laNil());
+	return laValPtr(nil_ptr);
 }
 
 
@@ -95,7 +133,7 @@ laValPtr laEnv::get_val(std::string key)
 		return this->m_map.at(key);	
 	else
 		//TODO:error
-		return laValPtr(new laNil);
+		return la_nil();
 
 }
 
