@@ -25,12 +25,20 @@ laValPtr	la_or(laListPtr args,laEnv& env);
 laValPtr	la_if(laListPtr args,laEnv& env);
 
 
+laValPtr	la_set(laListPtr args,laEnv& env);
+laValPtr	la_fset(laListPtr args,laEnv& env);
+laValPtr	la_val(laListPtr args,laEnv& env);
+
+
+
 laValPtr	la_nil();
 laValPtr	la_list();
 laValPtr	la_number(const int = 0);
 laValPtr	la_number(const std::string);
 laValPtr	la_symbol(const std::string);
 laValPtr	la_string(const std::string = "str");
+
+
 
 
 #endif

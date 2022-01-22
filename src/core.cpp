@@ -408,6 +408,7 @@ laValPtr la_or(laListPtr args,laEnv& env)
 }
 
 
+//no eval
 laValPtr la_if(laListPtr args,laEnv &env)
 {
 	if(args->size() != 4)//if cond then else
@@ -422,4 +423,66 @@ laValPtr la_if(laListPtr args,laEnv &env)
 	else
 		return eval_sex(args->at(3),env);
 
+}
+
+
+//no eval
+laValPtr la_set(laListPtr args,laEnv &env)
+{	
+	if(args->size() != 3)//set symbol value
+		//TODO:error
+		return la_nil();
+
+
+	if((args->at(1))->get_type() != laType::Symbol)
+		//TODO:error
+		return la_nil();
+
+
+	//TODO:error if eval_sex returns nil
+	env.set_val((args->at(1))->print(),eval_sex(args->at(2),env));
+
+	return args->at(1);
+
+
+}
+
+//no eval
+laValPtr la_fset(laListPtr args,laEnv &env)
+{	
+	if(args->size() != 3)//set symbol value
+		//TODO:error
+		return la_nil();
+
+
+	if((args->at(1))->get_type() != laType::Symbol)
+		//TODO:error
+		return la_nil();
+
+	//TODO:error if eval_sex returns nil
+	env.fset_val((args->at(1))->print(),eval_sex(args->at(2),env));
+
+
+	return args->at(1);
+
+}
+
+//no eval
+laValPtr la_val(laListPtr args,laEnv &env)
+{	
+	if(args->size() != 3)//set symbol value
+		//TODO:error
+		return la_nil();
+
+
+	if((args->at(1))->get_type() != laType::Symbol)
+		//TODO:error
+		return la_nil();
+
+
+	//TODO:error if eval_sex returns nil
+	env.insert_val((args->at(1))->print(),eval_sex(args->at(2),env));
+
+
+	return args->at(1);
 }

@@ -33,7 +33,10 @@ std::map<std::string,
 std::map<std::string,
 	laValPtr (*)(laListPtr, laEnv&)> ne_operators=
 	{	
-		{"if",&la_if}
+		{"if",&la_if},
+		{"set",&la_set},
+		{"fset",&la_fset},
+		{"val",&la_val}
 	};
 
 
