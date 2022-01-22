@@ -169,6 +169,19 @@ laValPtr la_truth_value(laListPtr args,laEnv &env)
 
 }
 
+laValPtr la_not_truth_value(laListPtr args,laEnv &env)
+{
+	if(args->size() != 1)
+		//TODO:error
+		return la_nil();
+
+	if(!((args->at(0))->is_true()))
+		return la_number(1); 
+	else
+		return la_nil();
+
+
+}
 
 laValPtr la_equals(laListPtr args,laEnv& env)
 {
@@ -193,6 +206,204 @@ laValPtr la_equals(laListPtr args,laEnv& env)
 
 	}
 	return la_number(1);
+
+}
+
+laValPtr la_more(laListPtr args,laEnv& env)
+{
+	if(args->size() == 0)
+		//TODO:error
+		return la_nil(); 
+
+	
+	//ref = first argument
+	if((args->at(0))->get_type() != laType::Number)
+		//TODO: error
+		return la_nil(); 
+
+	double ref = (std::dynamic_pointer_cast
+				<laNumber>(args->at(0)))->value();
+
+	laValPtr curr;
+	
+	for(int i=1;i<args->size();i++)
+	{
+		curr = args->at(i);
+		if(curr->get_type() != laType::Number)
+			//TODO:error
+			return la_nil();	
+		
+		if((std::dynamic_pointer_cast<laNumber>(curr))->value()
+			>= ref)
+			return la_nil();
+
+	}
+	return la_number(1);
+
+}
+
+laValPtr la_less(laListPtr args,laEnv& env)
+{
+	if(args->size() == 0)
+		//TODO:error
+		return la_nil(); 
+
+	
+	//ref = first argument
+	if((args->at(0))->get_type() != laType::Number)
+		//TODO: error
+		return la_nil(); 
+
+	double ref = (std::dynamic_pointer_cast
+				<laNumber>(args->at(0)))->value();
+
+	laValPtr curr;
+	
+	for(int i=1;i<args->size();i++)
+	{
+		curr = args->at(i);
+		if(curr->get_type() != laType::Number)
+			//TODO:error
+			return la_nil();	
+		
+		if((std::dynamic_pointer_cast<laNumber>(curr))->value()
+			<= ref)
+			return la_nil();
+
+	}
+	return la_number(1);
+
+}
+
+laValPtr la_more_or_equal(laListPtr args,laEnv& env)
+{
+	if(args->size() == 0)
+		//TODO:error
+		return la_nil(); 
+
+	
+	//ref = first argument
+	if((args->at(0))->get_type() != laType::Number)
+		//TODO: error
+		return la_nil(); 
+
+	double ref = (std::dynamic_pointer_cast
+				<laNumber>(args->at(0)))->value();
+
+	laValPtr curr;
+	
+	for(int i=1;i<args->size();i++)
+	{
+		curr = args->at(i);
+		if(curr->get_type() != laType::Number)
+			//TODO:error
+			return la_nil();	
+		
+		if((std::dynamic_pointer_cast<laNumber>(curr))->value()
+			> ref)
+			return la_nil();
+
+	}
+	return la_number(1);
+
+}
+
+laValPtr la_less_or_equal(laListPtr args,laEnv& env)
+{
+	if(args->size() == 0)
+		//TODO:error
+		return la_nil(); 
+
+	
+	//ref = first argument
+	if((args->at(0))->get_type() != laType::Number)
+		//TODO: error
+		return la_nil(); 
+
+	double ref = (std::dynamic_pointer_cast
+				<laNumber>(args->at(0)))->value();
+
+	laValPtr curr;
+	
+	for(int i=1;i<args->size();i++)
+	{
+		curr = args->at(i);
+		if(curr->get_type() != laType::Number)
+			//TODO:error
+			return la_nil();	
+		
+		if((std::dynamic_pointer_cast<laNumber>(curr))->value()
+			< ref)
+			return la_nil();
+
+	}
+	return la_number(1);
+
+}
+
+laValPtr la_real_equals(laListPtr args,laEnv& env)
+{
+	if(args->size() == 0)
+		//TODO:error
+		return la_nil(); 
+
+
+	laValPtr first = args->at(0);
+	laValPtr curr;
+
+	
+	for(int i=0;i<args->size();i++)
+	{
+		curr = args->at(i);
+		if(first != curr)
+			return la_nil();	
+		
+	}
+	return la_number(1);
+
+}
+
+laValPtr la_and(laListPtr args,laEnv& env)
+{
+	if(args->size() == 0)
+		//TODO:error
+		return la_nil(); 
+
+
+	laValPtr curr;
+
+	
+	for(int i=0;i<args->size();i++)
+	{
+		curr = args->at(i);
+		
+		if(!(curr->is_true()))
+			return la_nil();
+
+	}
+	return la_number(1);
+
+}
+
+laValPtr la_or(laListPtr args,laEnv& env)
+{
+	if(args->size() == 0)
+		//TODO:error
+		return la_nil(); 
+
+
+	laValPtr curr;
+
+	
+	for(int i=0;i<args->size();i++)
+	{
+		curr = args->at(i);
+		
+		if((curr->is_true()))
+			return la_number(1);
+
+	}
+	return la_nil();
 
 }
 

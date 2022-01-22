@@ -18,7 +18,15 @@ std::map<std::string,
 		{"*",&la_product},	
 		{"/",&la_quotient},
 		{"?",&la_truth_value},
-		{"=",&la_equals}
+		{"!",&la_not_truth_value},
+		{"=",&la_equals},
+		{">",&la_more},
+		{"<",&la_less},
+		{">=",&la_more_or_equal},
+		{"<=",&la_less_or_equal},
+		{"==",&la_real_equals},
+		{"&",&la_and},
+		{"|",&la_or}
 	};
 
 
