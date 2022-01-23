@@ -516,3 +516,40 @@ laValPtr la_function(laListPtr args,laEnv& env)
 	
 	return args->at(1);
 }
+
+//no eval
+laValPtr la_let(laListPtr args,laEnv& env)
+{
+	if(args->size() < 3)//let var body body....
+		//TODO:error
+		return la_nil();
+
+	if((args->at(1))->get_type() != laType::List)
+		//TODO:error
+		return la_nil();
+
+	laListPtr vars = std::dynamic_pointer_cast<laList>(args->at(1));
+
+
+
+	laEnv local_env(&env);
+
+	for(int i=0;i<vars->size();i++)
+	{
+		if(vars->at(i)->get_type() != laType::List)
+			return la_nil();//TODO:error
+	
+		laListPtr var = std::dynamic_pointer_cast<laList>(vars->at(i));
+		local_env.insert_val(var->at(0)->print(),var->at(1));
+
+	}
+	
+	laValPtr	res = la_nil();
+
+	for(int i=2;i<args->size();i++)
+	{
+		res = eval_sex(args->at(i),local_env);
+	}
+
+	return res;
+}

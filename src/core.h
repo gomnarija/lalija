@@ -30,6 +30,7 @@ laValPtr	la_fset(laListPtr args,laEnv& env);
 laValPtr	la_val(laListPtr args,laEnv& env);
 
 laValPtr	la_function(laListPtr args,laEnv& env);
+laValPtr	la_let(laListPtr args,laEnv& env);
 
 laValPtr	la_nil();
 laValPtr	la_list();
