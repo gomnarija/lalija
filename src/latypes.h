@@ -13,6 +13,7 @@ enum laType
 	String,
 	Symbol,
 	List,
+	Function
 };
 
 
@@ -125,6 +126,43 @@ private:
 	std::string 	m_value;
 };
 
+
+typedef	std::shared_ptr<laNumber>
+		laNumberPtr;
+typedef	std::shared_ptr<laString>
+		laStringPtr;
+typedef	std::shared_ptr<laSymbol>
+		laSymbolPtr;
+typedef	std::shared_ptr<laList>
+		laListPtr;
+
+
+
+struct laFunction : laVal
+{
+	laFunction(){};
+	laFunction(std::string name, laListPtr args, laListPtr body)
+		: m_name{name}, m_args{args}, m_body{body} {};
+
+	std::string print() override {return this->m_name;}
+
+
+	const laType get_type() override {return laType::Function;}
+
+
+	laListPtr	args(){return m_args;}
+	laListPtr	body(){return m_body;}
+
+private:
+	std::string	m_name;
+	laListPtr	m_args;
+	laListPtr	m_body;
+};
+
+typedef	std::shared_ptr<laFunction>
+		laFunctionPtr;
+
+
 struct laNil : laVal
 {
 
@@ -146,16 +184,6 @@ private:
 
 };
 
-
-
-typedef	std::shared_ptr<laNumber>
-		laNumberPtr;
-typedef	std::shared_ptr<laString>
-		laStringPtr;
-typedef	std::shared_ptr<laSymbol>
-		laSymbolPtr;
-typedef	std::shared_ptr<laList>
-		laListPtr;
 
 
 laValPtr laNilVal();

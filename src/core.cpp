@@ -7,6 +7,7 @@
 #include <string>
 
 
+
 laValPtr la_nil()
 {
 	return laValPtr(laNilVal());
@@ -484,5 +485,34 @@ laValPtr la_val(laListPtr args,laEnv &env)
 	env.insert_val((args->at(1))->print(),eval_sex(args->at(2),env));
 
 
+	return args->at(1);
+}
+
+
+//no eval
+laValPtr la_function(laListPtr args,laEnv& env)
+{
+	if(args->size() < 4)//function name args body body body...
+		//TODO:error
+		return la_nil();
+
+	if((args->at(2))->get_type() != laType::List)
+		//TODO:error
+		return la_nil();
+
+	laListPtr body(new laList());
+
+	for(int i=3;i<args->size();i++)
+		body->insert(args->at(i));
+
+	laFunctionPtr fun = laFunctionPtr(new laFunction(
+			(args->at(1))->print(),
+			  std::dynamic_pointer_cast<laList>(args->at(2))
+								   ,body));
+
+
+	env.insert_val((args->at(1))->print(),
+		std::dynamic_pointer_cast<laVal>(fun));
+	
 	return args->at(1);
 }

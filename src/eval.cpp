@@ -5,8 +5,8 @@
 #include <map>
 
 laValPtr eval_list(laValPtr ,laEnv &);
+laValPtr eval_function(laFunctionPtr,laListPtr,laEnv &);
 laValPtr eval_atom(laValPtr ,laEnv &);
-
 
 
 
@@ -36,7 +36,8 @@ std::map<std::string,
 		{"if",&la_if},
 		{"set",&la_set},
 		{"fset",&la_fset},
-		{"val",&la_val}
+		{"val",&la_val},
+		{"function",&la_function}
 	};
 
 
@@ -68,6 +69,8 @@ laValPtr eval_sex(laValPtr ast,laEnv &env)
 			return eval_atom(ast,env);
 		case laType::List:
 			return eval_list(ast,env);
+		case laType::Function:
+			//TODO:error
 		default:
 			return la_nil(); 
 	}
@@ -108,10 +111,53 @@ laValPtr eval_list(laValPtr list,laEnv &env)
 
 	//operator
 	if(operators.find(op->print()) !=operators.end())
-		return operators.at(op->print())(args,env);
-	else//TODO:functions
-		return la_nil(); 
+	{
+	
 		
+		return operators.at(op->print())(args,env);
+	}
+	else
+	{
+		laValPtr pot_fun = env_search(op,env);
+		if(pot_fun->get_type() == laType::Function)
+			return eval_function(
+				std::dynamic_pointer_cast<laFunction>(pot_fun),
+					args,env);
+		else
+	
+
+
+		return la_nil();
+	}
+		
+}
+
+laValPtr eval_function(laFunctionPtr function,laListPtr args,laEnv &env)
+{
+	laEnv local_env(&env);
+
+	
+
+	laListPtr fun_args = function->args();
+
+	for(int i=0;i<fun_args->size();i++)
+	{
+		local_env.insert_val(
+			(fun_args->at(i))->print(),
+					args->at(i));
+
+	}
+
+	laListPtr fun_body = function->body();
+	laValPtr  res = la_nil();
+
+	for(int i=0;i<fun_body->size();i++)
+	{
+		res = eval_sex(fun_body->at(i),local_env);
+	}
+
+
+	return res;
 }
 
 laValPtr eval_atom(laValPtr atom,laEnv &env)
@@ -124,6 +170,8 @@ laValPtr eval_atom(laValPtr atom,laEnv &env)
 			return atom;
 		case laType::Symbol:
 			return env_search(atom,env);
+		case laType::Function:
+			//TODO: error
 		default:
 			return la_nil();
 	}
