@@ -12,6 +12,8 @@ std::string	PRINT(laValPtr ast);
 
 std::string rep(laEnv &env);
 
+std::string lalija{"lalija"};
+
 int main()
 {
 
@@ -20,7 +22,7 @@ int main()
 	global_env.insert_val("Nil",laValPtr(laNilVal()));
 	global_env.insert_val("T",laValPtr(new laNumber(1)));
 	
-	while("lalija")
+	while(lalija=="lalija")
 		std::cout  << rep(global_env) << "\n";
 	
 	return 0;	

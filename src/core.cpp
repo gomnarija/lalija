@@ -8,6 +8,9 @@
 
 
 
+extern std::string lalija;
+
+
 laValPtr la_nil()
 {
 	return laValPtr(laNilVal());
@@ -552,4 +555,11 @@ laValPtr la_let(laListPtr args,laEnv& env)
 	}
 
 	return res;
+}
+
+
+laValPtr la_quit(laListPtr args,laEnv& env)
+{
+	lalija = "ne_lalija";
+	return la_string(":)");
 }

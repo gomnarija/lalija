@@ -38,7 +38,8 @@ std::map<std::string,
 		{"fset",&la_fset},
 		{"val",&la_val},
 		{"function",&la_function},
-		{"let",&la_let}
+		{"let",&la_let},
+		{"quit",&la_quit}
 	};
 
 

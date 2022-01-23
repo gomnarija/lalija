@@ -41,5 +41,6 @@ laValPtr	la_string(const std::string = "str");
 
 
 
+laValPtr	la_quit(laListPtr args,laEnv& env);
 
 #endif
