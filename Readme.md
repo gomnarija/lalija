@@ -24,6 +24,6 @@ make install
 - [Atoms](https://github.com/gomnarija/lalija/blob/master/dox.md#atoms)
 - [Lists](https://github.com/gomnarija/lalija/blob/master/dox.md#lists)
 - [Variables](https://github.com/gomnarija/lalija/blob/master/dox.md#variables)
-- [Functions]((https://github.com/gomnarija/lalija/blob/master/dox.md#functions)
+- [Functions](https://github.com/gomnarija/lalija/blob/master/dox.md#functions)
 - [Conditioning](https://github.com/gomnarija/lalija/blob/master/dox.md#conditioning)
 - [Environments](https://github.com/gomnarija/lalija/blob/master/dox.md#environments)
