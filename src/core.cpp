@@ -454,7 +454,7 @@ laValPtr la_set(laListPtr args,laEnv &env)
 //no eval
 laValPtr la_fset(laListPtr args,laEnv &env)
 {	
-	if(args->size() != 3)//set symbol value
+	if(args->size() != 3)//fset symbol value
 		//TODO:error
 		return la_nil();
 
@@ -474,7 +474,7 @@ laValPtr la_fset(laListPtr args,laEnv &env)
 //no eval
 laValPtr la_val(laListPtr args,laEnv &env)
 {	
-	if(args->size() != 3)//set symbol value
+	if(args->size() != 3)//val symbol value
 		//TODO:error
 		return la_nil();
 
